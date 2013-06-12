@@ -28,11 +28,14 @@
 " | Put machine/user specific settings in ~/.vimrc.local                      |
 " -----------------------------------------------------------------------------  
 
+execute pathogen#infect()
 
 set nocompatible
 let mapleader = ","
 imap jj <Esc> " Professor VIM says '87% of users prefer jj over esc', jj abrams disagrees
-
+" map ctrl-s as saves
+map <C-s> :w<CR>
+map <C-x> :x<CR>
 
 " Tabs ************************************************************************
 "set sta " a <Tab> in an indent inserts 'shiftwidth' spaces
@@ -91,7 +94,7 @@ set ignorecase " Ignore case when searching
 set smartcase " Ignore case when searching lowercase
 
 " ,a to continue search throughout all
-nmap <Leader>a :silent exec "while !search( @/, \"W\") \| bnext \| 0 \| endwhile"<CR>
+" nmap <Leader>a :silent exec "while !search( @/, \"W\") \| bnext \| 0 \| endwhile"<CR>
 
 " Colors **********************************************************************
 "set t_Co=256 " 256 colors
@@ -108,17 +111,17 @@ match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
 
 
 " Line Wrapping ***************************************************************
-set nowrap
+set wrap
 set linebreak  " Wrap at word
 
 
 " Directories *****************************************************************
 " Setup backup location and enable
-"set backupdir=~/backup/vim
+set backupdir=~/Documents/vim
 "set backup
 
 " Set Swap directory
-"set directory=~/backup/vim/swap
+set directory=~/Documents/vim/swap
 
 " Sets path to directory buffer was loaded from
 "autocmd BufEnter * lcd %:p:h
@@ -194,8 +197,8 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 
 
 " Hard to type *****************************************************************
-imap uu _
-imap hh =>
+" imap uu _
+" imap hh =>
 
 
 " -----------------------------------------------------------------------------  
@@ -206,6 +209,7 @@ imap hh =>
 :noremap <Leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
 let NERDTreeMouseMode=1 " Single click for everything
+let NERDTreeDirArrows=0
 
 
 " NERD Commenter **************************************************************
@@ -218,9 +222,10 @@ let NERDCreateDefaultMappings=0 " I turn this off to make it simple
 
 "
 " CtrlP ********************************************************
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 map <Leader>f :CtrlP<CR>
 map <Leader>b :CtrlPBuffer<CR>
-
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " autocomplpop ***************************************************************
 " complete option
@@ -242,6 +247,8 @@ let Tlist_WinWidth = 50
 map <Leader>t :TlistToggle<cr>
 map <Leader>j <C-]>
 
+" ack *************************************************************************
+nmap <Leader>a <Esc>:Ack! 
 
 " -----------------------------------------------------------------------------  
 " |                             OS Specific                                   |
@@ -267,13 +274,14 @@ map <Leader>j <C-]>
 "autocmd VimEnter * exe 'NERDTree' | wincmd l 
 
 
-
 " -----------------------------------------------------------------------------  
 " |                               Host specific                               |
 " -----------------------------------------------------------------------------  
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+set undodir=~/.vim/backup
 
 "if hostname() == "foo"
   " do something
