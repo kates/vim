@@ -84,7 +84,7 @@ set splitbelow splitright
 
 " Cursor highlights ***********************************************************
 set cursorline
-"set cursorcolumn
+set cursorcolumn
 
 
 " Searching *******************************************************************
