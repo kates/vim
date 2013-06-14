@@ -1,44 +1,12 @@
-" -----------------------------------------------------------------------------  
-"
-" |                            VIM Settings                                   |
-" |                   (see gvimrc for gui vim settings)                       |
-" |                                                                           |
-" | Some highlights:                                                          |
-" |   jj = <esc>  Very useful for keeping your hands on the home row          |
-" |   ,n = toggle NERDTree off and on                                         |
-" |                                                                           |
-" |   ,f = fuzzy find all files                                               |
-" |   ,b = fuzzy find in all buffers                                          |
-" |   ,p = go to previous file                                                |
-" |                                                                           |
-" |   hh = inserts '=>'                                                       |
-" |                                                                           |
-" |   ,h = new horizontal window                                              |
-" |   ,v = new vertical window                                                |
-" |                                                                           |
-" |   ,i = toggle invisibles                                                  |
-" |   ,c = toggle comments                                                    |
-" |   ,F2 = toggle paste "                                                     |
-" |                                                                           |
-" |   enter and shift-enter = adds a new line after/before the current line   |
-" |                                                                           |
-" |   :call Tabstyle_tabs = set tab to real tabs                              |
-" |   :call Tabstyle_spaces = set tab to 2 spaces                             |
-" |                                                                           |
-" | Put machine/user specific settings in ~/.vimrc.local                      |
-" -----------------------------------------------------------------------------  
 
 execute pathogen#infect()
 
 set nocompatible
-let mapleader = ","
-imap jj <Esc> " Professor VIM says '87% of users prefer jj over esc', jj abrams disagrees
-" map ctrl-s as saves
-map <C-s> :w<CR>
-map <C-x> :x<CR>
+set encoding=utf8
+set colorcolumn=81
 
-" Tabs ************************************************************************
-"set sta " a <Tab> in an indent inserts 'shiftwidth' spaces
+let mapleader = ","
+imap jj <Esc>
 
 function! Tabstyle_tabs()
   " Using 4 column tabs
@@ -62,10 +30,9 @@ endfunction
 
 call Tabstyle_spaces()
 
-
 " Indenting *******************************************************************
-set ai " Automatically set the indent of a new line (local to buffer)
-set si " smartindent (local to buffer)
+set ai 
+set si 
 set pastetoggle=<F2>
 
 " Scrollbars ******************************************************************
@@ -78,8 +45,8 @@ set equalalways " Multiple windows, when created, are equal in size
 set splitbelow splitright
 
 " Vertical and horizontal split then hop to a new buffer
-:noremap <Leader>v :vsp^M^W^W<cr>
-:noremap <Leader>h :split^M^W^W<cr>
+noremap <Leader>v :vsp^M^W^W<cr>
+noremap <Leader>h :split^M^W^W<cr>
 
 
 " Cursor highlights ***********************************************************
@@ -93,13 +60,9 @@ set incsearch  " Incremental search, search as you type
 set ignorecase " Ignore case when searching 
 set smartcase " Ignore case when searching lowercase
 
-" ,a to continue search throughout all
-" nmap <Leader>a :silent exec "while !search( @/, \"W\") \| bnext \| 0 \| endwhile"<CR>
-
 " Colors **********************************************************************
-"set t_Co=256 " 256 colors
 set background=dark 
-syntax on " syntax highlighting
+syntax on
 colorscheme ir_dark
 
 
@@ -118,21 +81,11 @@ set linebreak  " Wrap at word
 " Directories *****************************************************************
 " Setup backup location and enable
 set backupdir=~/Documents/vim
-"set backup
 
 " Set Swap directory
 set directory=~/Documents/vim/swap
 
-" Sets path to directory buffer was loaded from
-"autocmd BufEnter * lcd %:p:h
-
-
-" File Stuff ******************************************************************
 filetype plugin indent on
-" To show current filetype use: set filetype
-
-"autocmd FileType html :set filetype=xhtml
-
 
 " Insert New Line *************************************************************
 map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
@@ -144,18 +97,10 @@ map <Enter> o<ESC>
 " Sets what is saved when you save a session
 set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 
-
 " Invisible characters *********************************************************
 set listchars=trail:.,tab:>-,eol:$
 set nolist
-:noremap <Leader>i :set list!<CR> " Toggle invisible chars
-
-
-" Mouse ***********************************************************************
-"set mouse=a " Enable the mouse
-"behave xterm
-"set selectmode=mouse
-
+noremap <Leader>i :set list!<CR> " Toggle invisible chars
 
 " Misc settings ***************************************************************
 set backspace=indent,eol,start
@@ -178,119 +123,37 @@ map E ge
 
 map <Leader>p <C-^> " Go back to previous file
 
-
-" Ruby stuff ******************************************************************
-"compiler ruby         " Enable compiler support for ruby
-"map <F5> :!ruby %<CR>
-
-
-" Omni Completion *************************************************************
-autocmd FileType html :set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-" May require ruby compiled in
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete 
-
-
-" Hard to type *****************************************************************
-" imap uu _
-" imap hh =>
-
-
-" -----------------------------------------------------------------------------  
-" |                              Plug-ins                                     |
-" -----------------------------------------------------------------------------  
-
 " NERDTree ********************************************************************
-:noremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
 let NERDTreeMouseMode=1 " Single click for everything
 let NERDTreeDirArrows=0
 
 
-" NERD Commenter **************************************************************
-let NERDCreateDefaultMappings=0 " I turn this off to make it simple
+" NERD Commenter *********************************************************
+let NERDCreateDefaultMappings=0
+map <Leader>c :call NERDComment(0, "toggle")<CR> 
 
-" Toggle commenting on 1 line or all selected lines. Wether to comment or not
-" is decided based on the first line; if it's not commented then all lines
-" will be commented
-:map <Leader>c :call NERDComment(0, "toggle")<CR> 
-
-"
-" CtrlP ********************************************************
+" CtrlP ******************************************************************
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 map <Leader>f :CtrlP<CR>
-map <Leader>b :CtrlPBuffer<CR>
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-
-" autocomplpop ***************************************************************
-" complete option
-"set complete=.,w,b,u,t,k
-"let g:AutoComplPop_CompleteOption = '.,w,b,u,t,k'
-"set complete=.
-"let g:AutoComplPop_IgnoreCaseOption = 0
-"let g:AutoComplPop_BehaviorKeywordLength = 2
-
 
 " railsvim ***************************************************************
 map <Leader>ra :AS<CR>
 map <Leader>rs :RS<CR>
 
 
-" ctags ***************************************************************
+" ctags ******************************************************************
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_WinWidth = 50
 map <Leader>t :TlistToggle<cr>
-map <Leader>j <C-]>
 
-" ack *************************************************************************
-nmap <Leader>a <Esc>:Ack! 
+" Ag aka the_silver_searcher *********************************************
+map <Leader>a <Esc>:Ag 
 
-" -----------------------------------------------------------------------------  
-" |                             OS Specific                                   |
-" |                      (GUI stuff goes in gvimrc)                           |
-" -----------------------------------------------------------------------------  
-
-" Mac *************************************************************************
-"if has("mac") 
-  "" 
-"endif
- 
-" Windows *********************************************************************
-"if has("gui_win32")
-  "" 
-"endif
-
-
-
-" -----------------------------------------------------------------------------  
-" |                               Startup                                     |
-" -----------------------------------------------------------------------------  
-" Open NERDTree on start
-"autocmd VimEnter * exe 'NERDTree' | wincmd l 
-
-
-" -----------------------------------------------------------------------------  
-" |                               Host specific                               |
-" -----------------------------------------------------------------------------  
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
 set undodir=~/.vim/backup
-
-"if hostname() == "foo"
-  " do something
-"endif
-
-" Example .vimrc.local:
-
-"call Tabstyle_tabs()
-"colorscheme ir_dark
-"match LongLineWarning '\%120v.*'
-
-"autocmd User ~/git/some_folder/* call Tabstyle_spaces() | let g:force_xhtml=1
