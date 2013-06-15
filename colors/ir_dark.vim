@@ -58,15 +58,15 @@ hi LongLineWarning  guifg=NONE        guibg=#666666     gui=underline ctermfg=NO
 hi ModeMsg          guifg=black       guibg=#C6C5FE     gui=BOLD      ctermfg=black       ctermbg=cyan        cterm=BOLD
 
 if version >= 700 " Vim 7.x specific colors
-  hi CursorLine     guifg=NONE        guibg=#333333     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=BOLD
-  hi CursorColumn   guifg=NONE        guibg=#333333     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=BOLD
+  hi CursorLine     guifg=NONE        guibg=#333333     gui=NONE      ctermfg=NONE        ctermbg=NONE	      cterm=BOLD
+  hi CursorColumn   guifg=NONE        guibg=#333333     gui=NONE      ctermfg=NONE        ctermbg=NONE	      cterm=BOLD
   hi MatchParen     guifg=#f6f3e8     guibg=#857b6f     gui=BOLD      ctermfg=white       ctermbg=darkgray    cterm=NONE
   hi Pmenu          guifg=#f6f3e8     guibg=#444444     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=NONE
   hi PmenuSel       guifg=#000000     guibg=#cae682     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=NONE
   hi Search         guifg=NONE        guibg=black       gui=underline ctermfg=NONE        ctermbg=NONE	      cterm=underline
+  hi ColorColumn    guifg=NONE        guibg=#252525	gui=NONE      ctermfg=NONE        ctermbg=NONE	      cterm=NONE
 endif
 
-hi ColorColumn guibg=#252525
 
 " Syntax highlighting
 hi Comment          guifg=#7C7C7C     guibg=NONE        gui=NONE      ctermfg=darkgray    ctermbg=NONE        cterm=NONE
