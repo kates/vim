@@ -52,7 +52,7 @@ hi PmenuSbar        guifg=black       guibg=white       gui=NONE      ctermfg=bl
 hi Error            guifg=NONE        guibg=NONE        gui=undercurl ctermfg=white       ctermbg=red         cterm=NONE     guisp=#FF6C60 " undercurl color
 hi ErrorMsg         guifg=white       guibg=#FF6C60     gui=BOLD      ctermfg=white       ctermbg=red         cterm=NONE
 hi WarningMsg       guifg=white       guibg=#FF6C60     gui=BOLD      ctermfg=white       ctermbg=red         cterm=NONE
-hi LongLineWarning  guifg=NONE        guibg=#371F1C     gui=underline ctermfg=NONE        ctermbg=NONE	      cterm=underline
+hi LongLineWarning  guifg=NONE        guibg=#666666     gui=underline ctermfg=NONE        ctermbg=NONE	      cterm=underline
 
 " Message displayed in lower left, such as --INSERT--
 hi ModeMsg          guifg=black       guibg=#C6C5FE     gui=BOLD      ctermfg=black       ctermbg=cyan        cterm=BOLD
@@ -65,6 +65,8 @@ if version >= 700 " Vim 7.x specific colors
   hi PmenuSel       guifg=#000000     guibg=#cae682     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=NONE
   hi Search         guifg=NONE        guibg=black       gui=underline ctermfg=NONE        ctermbg=NONE	      cterm=underline
 endif
+
+hi ColorColumn guibg=#252525
 
 " Syntax highlighting
 hi Comment          guifg=#7C7C7C     guibg=NONE        gui=NONE      ctermfg=darkgray    ctermbg=NONE        cterm=NONE
