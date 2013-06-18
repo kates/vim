@@ -152,6 +152,10 @@ map <Leader>t :TlistToggle<cr>
 " Ag aka the_silver_searcher *********************************************
 map <Leader>a <Esc>:Ag 
 
+" File save/quit
+map <Leader>w :w<CR>
+map <Leader>z :q<CR>
+
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
