@@ -147,6 +147,7 @@ map <Leader>rs :RS<CR>
 " ctags ******************************************************************
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_WinWidth = 50
+let Tlist_Use_Right_Window=1
 map <Leader>t :TlistToggle<cr>
 
 " Ag aka the_silver_searcher *********************************************
