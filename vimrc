@@ -149,13 +149,14 @@ let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 let Tlist_WinWidth = 50
 let Tlist_Use_Right_Window=1
 map <Leader>t :TlistToggle<cr>
+let g:lt_quickfix_list_toggle_map = ",k"
 
 " Ag aka the_silver_searcher *********************************************
 map <Leader>a <Esc>:Ag 
 
 " File save/quit
-map <Leader>w :w<CR>
-map <Leader>z :q<CR>
+map <leader>w :w<CR>
+map <leader>q :q<CR>
 
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
