@@ -43,6 +43,10 @@ set numberwidth=4
 " Windows *********************************************************************
 set equalalways " Multiple windows, when created, are equal in size
 set splitbelow splitright
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " Vertical and horizontal split then hop to a new buffer
 noremap <Leader>v :vsp^M^W^W<cr>
@@ -122,6 +126,7 @@ imap <down> <C-o>gj
 map E ge
 
 map <Leader>p <C-^> " Go back to previous file
+
 
 " NERDTree ********************************************************************
 noremap <Leader>n :NERDTreeToggle<CR>
