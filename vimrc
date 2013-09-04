@@ -166,5 +166,12 @@ map <leader>q :q<CR>
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
-
+set verbosefile=~/.log/vim/verbose.log
 set undodir=~/.vim/backup
+
+let os = substitute(system('uname'), "\n", "", "")
+" i use macosx most of the time.
+if os == "Darwin"
+  vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>:echo "copied system clipboard"<CR>
+  nmap <C-v> :call setreg("\"", system("pbpaste"))<CR>p:echo ""<CR>
+end
