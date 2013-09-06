@@ -169,9 +169,19 @@ endif
 set verbosefile=~/.log/vim/verbose.log
 set undodir=~/.vim/backup
 
-let os = substitute(system('uname'), "\n", "", "")
-" i use macosx most of the time.
-if os == "Darwin"
-  vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>:echo "copied system clipboard"<CR>
-  nmap <C-v> :call setreg("\"", system("pbpaste"))<CR>p:echo ""<CR>
-end
+set clipboard=unnamed
+vmap <C-c> <Esc>:*y<CR>
+nmap <C-v> p<CR>
+
+augroup CrossHair
+  au!
+  au VimEnter * setlocal cursorline
+  au WinEnter * setlocal cursorline
+  au BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+
+  au VimEnter * setlocal cursorcolumn
+  au WinEnter * setlocal cursorcolumn
+  au BufWinEnter * setlocal cursorcolumn
+  au WinLeave * setlocal nocursorcolumn
+augroup end
