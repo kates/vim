@@ -1,9 +1,13 @@
+set nocompatible
 
 execute pathogen#infect()
 
-set nocompatible
-set encoding=utf8
+set encoding=utf-8
 set colorcolumn=81
+set synmaxcol=128
+set ttyfast
+set lazyredraw
+set re=1
 
 let mapleader = ","
 imap jj <Esc>
@@ -14,10 +18,6 @@ function! Tabstyle_tabs()
   set shiftwidth=4
   set tabstop=4
   set noexpandtab
-  autocmd User Rails set softtabstop=4
-  autocmd User Rails set shiftwidth=4
-  autocmd User Rails set tabstop=4
-  autocmd User Rails set noexpandtab
 endfunction
 
 function! Tabstyle_spaces()
@@ -31,8 +31,8 @@ endfunction
 call Tabstyle_spaces()
 
 " Indenting *******************************************************************
-set ai 
-set si 
+set ai
+set si
 set pastetoggle=<F2>
 
 " Scrollbars ******************************************************************
@@ -49,32 +49,32 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Vertical and horizontal split then hop to a new buffer
-noremap <Leader>v :vsp^M^W^W<cr>
-noremap <Leader>h :split^M^W^W<cr>
+noremap <Leader>h :below new<CR>
+noremap <Leader>v :below vnew<CR>
 
 
 " Cursor highlights ***********************************************************
 set cursorline
-set cursorcolumn
+"set cursorcolumn
 
 
 " Searching *******************************************************************
 set hlsearch  " highlight search
 set incsearch  " Incremental search, search as you type
-set ignorecase " Ignore case when searching 
+set ignorecase " Ignore case when searching
 set smartcase " Ignore case when searching lowercase
 
 " Colors **********************************************************************
-set background=dark 
+set background=dark
 syntax on
-colorscheme ir_dark
+colorscheme solarized
 
 
 " Status Line *****************************************************************
 set showcmd
 set ruler " Show ruler
 "set ch=2 " Make command line two lines high
-match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
+" match LongLineWarning '\%120v.*' " Error format when a line is longer than 120
 
 
 " Line Wrapping ***************************************************************
@@ -111,7 +111,7 @@ set backspace=indent,eol,start
 set number " Show line numbers
 set matchpairs+=<:>
 set vb t_vb= " Turn off bell, this could be more annoying, but I'm not sure how
-set nofoldenable " Turn off folding 
+set nofoldenable " Turn off folding
 
 
 " Navigation ******************************************************************
@@ -127,27 +127,25 @@ map E ge
 
 map <Leader>p <C-^> " Go back to previous file
 
-
 " NERDTree ********************************************************************
 noremap <Leader>n :NERDTreeToggle<CR>
 let NERDTreeHijackNetrw=1 " User instead of Netrw when doing an edit /foobar
 let NERDTreeMouseMode=1 " Single click for everything
 let NERDTreeDirArrows=0
-
+let NERDTreeIgnore = ['\.pyc$', '\.beam$']
 
 " NERD Commenter *********************************************************
 let NERDCreateDefaultMappings=0
-map <Leader>c :call NERDComment(0, "toggle")<CR> 
+map <Leader>c :call NERDComment(0, "toggle")<CR>
 
 " CtrlP ******************************************************************
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 map <Leader>f :CtrlP<CR>
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-
-" railsvim ***************************************************************
-map <Leader>ra :AS<CR>
-map <Leader>rs :RS<CR>
-
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|beam|pyc)$',
+  \ }
 
 " ctags ******************************************************************
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
@@ -157,11 +155,12 @@ map <Leader>t :TlistToggle<cr>
 let g:lt_quickfix_list_toggle_map = ",k"
 
 " Ag aka the_silver_searcher *********************************************
-map <Leader>a <Esc>:Ag 
+map <Leader>a <Esc>:Ag
 
 " File save/quit
-map <leader>w :w<CR>
-map <leader>q :q<CR>
+map <Leader>w :w<CR>
+map <Leader>q :q<CR>
+map <Leader>z :edit<CR>
 
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
@@ -169,9 +168,16 @@ endif
 set verbosefile=~/.log/vim/verbose.log
 set undodir=~/.vim/backup
 
-set clipboard=unnamed
-vmap <C-c> <Esc>:*y<CR>
-nmap <C-v> p<CR>
+"set clipboard=unnamed
+"vmap <C-c> <Esc>:*y<CR>
+"nmap <C-v> p<CR>
+
+let os = substitute(system('uname'), "\n", "", "")
+
+if os == "Darwin"
+  vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>:echo "copied to system clipboard"<CR>
+  nmap <C-v> :call setreg("\"", system("pbpaste"))<CR>p:echo ""<CR>
+endif
 
 augroup CrossHair
   au!
@@ -180,8 +186,13 @@ augroup CrossHair
   au BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
 
-  au VimEnter * setlocal cursorcolumn
-  au WinEnter * setlocal cursorcolumn
-  au BufWinEnter * setlocal cursorcolumn
-  au WinLeave * setlocal nocursorcolumn
+  "au VimEnter * setlocal cursorcolumn
+  "au WinEnter * setlocal cursorcolumn
+  "au BufWinEnter * setlocal cursorcolumn
+  "au WinLeave * setlocal nocursorcolumn
 augroup end
+
+map <Leader>j :%!python -m json.tool<CR>
+inoremap <C-p> <NOP>
+inoremap <C-n> <NOP>
+nmap <Leader>T :tabe<CR>
