@@ -7,7 +7,6 @@ set colorcolumn=81
 set synmaxcol=128
 set ttyfast
 set lazyredraw
-set re=1
 
 let mapleader = ","
 imap jj <Esc>
